@@ -1,0 +1,28 @@
+{
+  "name": "forge-di-smithy",
+  "version": "0.0.0",
+  "description": "additional tools to enhance forge-di",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamcarr/forge-di-smithy.git"
+  },
+  "author": "Adam Carr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adamcarr/forge-di-smithy/issues"
+  },
+  "homepage": "https://github.com/adamcarr/forge-di-smithy",
+  "devDependencies": {
+    "load-grunt-tasks": "~0.4.0",
+    "grunt": "~0.4.4",
+    "grunt-typescript": "~0.3.0"
+  },
+  "dependencies": {
+    "forge-di": "~0.7.0",
+    "lodash": "~2.4.1"
+  }
+}
