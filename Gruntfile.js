@@ -1,9 +1,11 @@
+/* jshint node: true */
+
 module.exports = function(grunt) {
   'use strict';
 
   grunt.initConfig({
     typescript: {
-      server: {
+      src: {
         src: ['src/**/*.ts'],
         dest: 'build',
         options: {

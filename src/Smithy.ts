@@ -59,43 +59,45 @@ module Smithy {
       return this;
     }
   }
-
-  export class FunctionTool<T extends {(...args: any[]): any}> implements ITool<T> {
-    public targetType: TargetType;
-
-    constructor(
-      public name: string,
-      public target: T,
-      public lifecycle: Lifecycle = Lifecycle.Singleton,
-      public when?: Forge.IPredicate
-      ) {
-      this.targetType = TargetType.Function;
+  
+  export module Tools {
+    export class Function<T extends {(...args: any[]): any}> implements ITool<T> {
+      public targetType: TargetType;
+  
+      constructor(
+        public name: string,
+        public target: T,
+        public lifecycle: Lifecycle = Lifecycle.Singleton,
+        public when?: Forge.IPredicate
+        ) {
+        this.targetType = TargetType.Function;
+      }
     }
-  }
-
-  export class InstanceTool<T extends Object> implements ITool<T> {
-    public targetType: TargetType;
-
-    constructor(
-      public name: string,
-      public target: T,
-      public lifecycle: Lifecycle = Lifecycle.Singleton,
-      public when?: Forge.IPredicate
-      ) {
-      this.targetType = TargetType.Instance;
+  
+    export class Instance<T extends Object> implements ITool<T> {
+      public targetType: TargetType;
+  
+      constructor(
+        public name: string,
+        public target: T,
+        public lifecycle: Lifecycle = Lifecycle.Singleton,
+        public when?: Forge.IPredicate
+        ) {
+        this.targetType = TargetType.Instance;
+      }
     }
-  }
-
-  export class TypeTool<T extends Forge.IType> implements ITool<T> {
-    public targetType: TargetType;
-
-    constructor(
-      public name: string,
-      public target: T,
-      public lifecycle: Lifecycle = Lifecycle.Singleton,
-      public when?: Forge.IPredicate
-      ) {
-      this.targetType = TargetType.Type;
+  
+    export class Type<T extends Forge.IType> implements ITool<T> {
+      public targetType: TargetType;
+  
+      constructor(
+        public name: string,
+        public target: T,
+        public lifecycle: Lifecycle = Lifecycle.Singleton,
+        public when?: Forge.IPredicate
+        ) {
+        this.targetType = TargetType.Type;
+      }
     }
   }
 }
