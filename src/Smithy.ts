@@ -5,6 +5,7 @@
 import Forge = require('forge-di');
 
 var _: _.LoDashStatic = require('lodash');
+var assert = require('assert');
 
 module Smithy {
   export interface IBlacksmith {
@@ -54,6 +55,10 @@ module Smithy {
         if (tool.when) {
           binding.when(tool.when);
         }
+        
+        if (tool.lifecycle === Lifecycle.Transient) {
+          binding.transient();
+        }
       });
 
       return this;
@@ -63,40 +68,115 @@ module Smithy {
   export module Tools {
     export class Function<T extends {(...args: any[]): any}> implements ITool<T> {
       public targetType: TargetType;
+      public lifecycle: Lifecycle;
+      public when: Forge.IPredicate;
   
+      constructor(name: string, target: T);
+      constructor(name: string, target: T, lifecycle: Lifecycle);
+      constructor(name: string, target: T, when: Forge.IPredicate);
+      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
       constructor(
         public name: string,
         public target: T,
-        public lifecycle: Lifecycle = Lifecycle.Singleton,
-        public when?: Forge.IPredicate
+        ...args: any[]
         ) {
         this.targetType = TargetType.Function;
+        
+        this.lifecycle = Smithy.Lifecycle.Singleton;
+        
+        assert(_.isString(this.name), 'Name is required and must be a string');
+        assert(_.isFunction(this.target), 'Target is required and must be a function');
+        
+        if (args.length === 1) {
+          if (_.isNumber(args[0])) {
+            this.lifecycle = args[0];
+          } else if (_.isFunction(args[0])) {
+            this.when = args[0];
+          } else {
+            throw 'Third of 3 parameters must be either a number or function.';
+          }
+        } else if (args.length >= 2) {
+          assert(_.isNumber(args[0]), 'Third of 4 parameters must be a number.');
+          assert(_.isFunction(args[1]), 'Fourth of 4 parameters must be a function.');
+          this.lifecycle = args[0];
+          this.when = args[1];
+        }
       }
     }
   
     export class Instance<T extends Object> implements ITool<T> {
       public targetType: TargetType;
+      public lifecycle: Lifecycle;
+      public when: Forge.IPredicate;
   
+      constructor(name: string, target: T);
+      constructor(name: string, target: T, lifecycle: Lifecycle);
+      constructor(name: string, target: T, when: Forge.IPredicate);
+      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
       constructor(
         public name: string,
         public target: T,
-        public lifecycle: Lifecycle = Lifecycle.Singleton,
-        public when?: Forge.IPredicate
+        ...args: any[]
         ) {
         this.targetType = TargetType.Instance;
+        
+        this.lifecycle = Smithy.Lifecycle.Singleton;
+        
+        assert(_.isString(this.name), 'Name is required and must be a string');
+        assert(_.isObject(this.target), 'Target is required and must be an object');
+        
+        if (args.length === 1) {
+          if (_.isNumber(args[0])) {
+            this.lifecycle = args[0];
+          } else if (_.isFunction(args[0])) {
+            this.when = args[0];
+          } else {
+            throw 'Third of 3 parameters must be either a number or function.';
+          }
+        } else if (args.length >= 2) {
+          assert(_.isNumber(args[0]), 'Third of 4 parameters must be a number.');
+          assert(_.isFunction(args[1]), 'Fourth of 4 parameters must be a function.');
+          this.lifecycle = args[0];
+          this.when = args[1];
+        }
       }
     }
   
     export class Type<T extends Forge.IType> implements ITool<T> {
       public targetType: TargetType;
+      public lifecycle: Lifecycle;
+      public when: Forge.IPredicate;
   
+      constructor(name: string, target: T);
+      constructor(name: string, target: T, lifecycle: Lifecycle);
+      constructor(name: string, target: T, when: Forge.IPredicate);
+      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
       constructor(
         public name: string,
         public target: T,
-        public lifecycle: Lifecycle = Lifecycle.Singleton,
-        public when?: Forge.IPredicate
+        ...args: any[]
         ) {
         this.targetType = TargetType.Type;
+        
+        this.lifecycle = Smithy.Lifecycle.Singleton;
+        
+        assert(_.isString(this.name), 'Name is required and must be a string');
+        assert(_.isFunction(this.target), 'Target is required and must be a function');
+        
+        if (args.length === 1) {
+          if (_.isNumber(args[0])) {
+            this.lifecycle = args[0];
+          } else if (_.isFunction(args[0])) {
+            this.when = args[0];
+          } else {
+            throw 'Third of 3 parameters must be either a number or function.';
+          }
+        } else if (args.length >= 2) {
+          assert(_.isNumber(args[0]), 'Third of 4 parameters must be a number.');
+          assert(_.isFunction(args[1]), 'Fourth of 4 parameters must be a function.');
+          this.lifecycle = args[0];
+          this.when = args[1];
+        }
       }
     }
   }

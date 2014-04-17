@@ -16,12 +16,35 @@ module.exports = function(grunt) {
           basePath: 'src',
           comments: false
         }
+      },
+      specs: {
+        src: ['specs/**/*.ts'],
+        options: {
+          module: 'commonjs', //or commonjs
+          target: 'es5', //or es3
+          sourceMap: false,
+          declaration: false,
+          comments: false
+        }
       }
+    },
+    jasmine_node: {
+      options: {
+        forceExit: true,
+        match: '.',
+        matchall: false,
+        extensions: 'js',
+        specNameMatcher: 'spec'
+      },
+      all: ['specs/']
     }
   });
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['typescript']);
+  grunt.registerTask('build', ['typescript:src']);
 
+  grunt.registerTask('test', ['typescript:specs', 'jasmine_node']);
+
+  grunt.registerTask('default', ['typescript', 'jasmine_node']);
 };
