@@ -140,5 +140,6 @@ expect(blah.dependency).to.be.an.instanceOf(Foo2);
 ```
 
 ## Tasks
- - [ ] Refactor overloads for tools into an options argument for named arguments
- - [ ] Add ability to configure a tool to auto register a func resolver based on the current binding name + 'Func' for factory.
+
+- [ ] Refactor overloads for tools into an options argument for named arguments
+- [ ] Add ability to configure a tool to auto register a func resolver based on the current binding name + 'Func' for factory.
