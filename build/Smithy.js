@@ -65,65 +65,27 @@ var Smithy;
 
     (function (Tools) {
         var BaseTool = (function () {
-            function BaseTool(name, target, args) {
-                this.name = name;
-                this.target = target;
-                this.lifecycle = 0 /* Singleton */;
+            function BaseTool(options) {
+                _.assign(this, options);
 
-                assert(_.isString(this.name), 'Name is required and must be a string');
-                assert(!_.isUndefined(this.target), 'Target is required');
-                assert(!_.isNull(this.target), 'Target is required');
+                if (_.isUndefined(this.lifecycle)) {
+                    this.lifecycle = 0 /* Singleton */;
+                }
 
-                if (args.length === 1) {
-                    if (_.isNumber(args[0])) {
-                        this.lifecycle = args[0];
-                    } else if (_.isFunction(args[0])) {
-                        this.when = args[0];
-                    } else if (_.isString(args[0])) {
-                        this.hint = args[0];
-                    } else if (_.isObject(args[0])) {
-                        this.bindingArguments = args[0];
-                    } else {
-                        throw 'Third of 3 arguments must be either a number, function, or object.';
-                    }
-                } else if (args.length === 2) {
-                    if (_.isNumber(args[0])) {
-                        this.lifecycle = args[0];
-                        if (_.isFunction(args[1])) {
-                            this.when = args[1];
-                        } else if (_.isString(args[1])) {
-                            this.hint = args[1];
-                        } else if (_.isObject(args[1])) {
-                            this.bindingArguments = args[1];
-                        } else {
-                            throw 'Fourth of 4 arguments must be either a string, function, or object.';
-                        }
-                    } else if (_.isFunction(args[0])) {
-                        assert(_.isObject(args[1]), 'Fourth of 4 arguments must be an object if third is a function.');
-                        this.when = args[0];
-                        this.bindingArguments = args[1];
-                    } else if (_.isString(args[0])) {
-                        assert(_.isObject(args[1]), 'Fourth of 4 arguments must be an object if third is a function.');
-                        this.hint = args[0];
-                        this.bindingArguments = args[1];
-                    } else {
-                        throw 'Third of 4 arguments must be either a number, string, or function.';
-                    }
-                } else if (args.length >= 3) {
-                    assert(_.isNumber(args[0]), 'Third of 5 arguments must be a number.');
-                    assert(_.isFunction(args[1]) || _.isString(args[1]), 'Fourth of 5 arguments must be a function or string.');
-                    assert(_.isObject(args[2]), 'Fifth of 5 arguments must be an object.');
-                    this.lifecycle = args[0];
-                    if (_.isFunction(args[1])) {
-                        this.when = args[1];
-                    } else {
-                        this.hint = args[1];
-                    }
-                    this.bindingArguments = args[2];
+                assert(_.isString(this.name), "'name' is required and must be a string");
+                assert(!_.isUndefined(this.target), "'target' is required");
+                assert(!_.isNull(this.target), "'target' is required");
 
-                    if (args.length > 3) {
-                        console.warn('More than 5 arguments were provided. Extra arguments will be ignored.');
-                    }
+                if (!_.isUndefined(this.bindingArguments)) {
+                    assert(_.isObject(this.bindingArguments), "'bindingArguments', if defined, must be an object.");
+                }
+
+                if (!_.isUndefined(this.when)) {
+                    assert(_.isFunction(this.when), "'when', if defined, must be a function.");
+                }
+
+                if (!_.isUndefined(this.hint)) {
+                    assert(_.isString(this.hint), "'hint', if defined, must be a string.");
                 }
             }
             return BaseTool;
@@ -132,18 +94,12 @@ var Smithy;
 
         var Function = (function (_super) {
             __extends(Function, _super);
-            function Function(name, target) {
-                var args = [];
-                for (var _i = 0; _i < (arguments.length - 2); _i++) {
-                    args[_i] = arguments[_i + 2];
-                }
-                _super.call(this, name, target, args);
-                this.name = name;
-                this.target = target;
+            function Function(options) {
+                _super.call(this, options);
 
                 this.targetType = 2 /* Function */;
 
-                assert(_.isFunction(this.target), 'Target is required and must be a function');
+                assert(_.isFunction(this.target), "'target' is required and must be a function");
             }
             return Function;
         })(BaseTool);
@@ -151,14 +107,8 @@ var Smithy;
 
         var Instance = (function (_super) {
             __extends(Instance, _super);
-            function Instance(name, target) {
-                var args = [];
-                for (var _i = 0; _i < (arguments.length - 2); _i++) {
-                    args[_i] = arguments[_i + 2];
-                }
-                _super.call(this, name, target, args);
-                this.name = name;
-                this.target = target;
+            function Instance(options) {
+                _super.call(this, options);
 
                 this.targetType = 1 /* Instance */;
             }
@@ -168,18 +118,12 @@ var Smithy;
 
         var Type = (function (_super) {
             __extends(Type, _super);
-            function Type(name, target) {
-                var args = [];
-                for (var _i = 0; _i < (arguments.length - 2); _i++) {
-                    args[_i] = arguments[_i + 2];
-                }
-                _super.call(this, name, target, args);
-                this.name = name;
-                this.target = target;
+            function Type(options) {
+                _super.call(this, options);
 
                 this.targetType = 0 /* Type */;
 
-                assert(_.isFunction(this.target), 'Target is required and must be a function');
+                assert(_.isFunction(this.target), "'target' is required and must be a function");
             }
             return Type;
         })(BaseTool);

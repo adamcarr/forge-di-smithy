@@ -22,8 +22,8 @@ module Smithy {
   export interface ITool<T> {
     name: string;
     target: T;
-    targetType: TargetType;
-    lifecycle: Lifecycle;
+    targetType?: TargetType;
+    lifecycle?: Lifecycle;
     when?: Forge.IPredicate;
     hint?: string;
     bindingArguments?: Forge.IBindingArguments;
@@ -79,151 +79,65 @@ module Smithy {
   
   export module Tools {
     export class BaseTool<T> implements ITool<T> {
+      public name: string;
+      public target: T;
       public targetType: TargetType;
       public lifecycle: Lifecycle;
       public when: Forge.IPredicate;
       public hint: string;
       public bindingArguments: Forge.IBindingArguments;
   
-      constructor(
-        public name: string,
-        public target: T,
-        args: any[]
-        ) {
-        
-        this.lifecycle = Smithy.Lifecycle.Singleton;
-        
-        assert(_.isString(this.name), 'Name is required and must be a string');
-        assert(!_.isUndefined(this.target), 'Target is required');
-        assert(!_.isNull(this.target), 'Target is required');
-        
-        if (args.length === 1) {
-          if (_.isNumber(args[0])) {
-            this.lifecycle = args[0];
-          } else if (_.isFunction(args[0])) {
-            this.when = args[0];
-          } else if (_.isString(args[0])) {
-            this.hint = args[0];
-          } else if (_.isObject(args[0])) {
-            this.bindingArguments = args[0];
-          } else {
-            throw 'Third of 3 arguments must be either a number, function, or object.';
-          }
-        } else if (args.length === 2) {
-          if (_.isNumber(args[0])) {
-            this.lifecycle = args[0];
-            if (_.isFunction(args[1])) {
-              this.when = args[1];
-            } else if (_.isString(args[1])) {
-              this.hint = args[1];
-            } else if (_.isObject(args[1])) {
-              this.bindingArguments = args[1];
-            } else {
-              throw 'Fourth of 4 arguments must be either a string, function, or object.';
-            }
-          } else if (_.isFunction(args[0])) {
-            assert(_.isObject(args[1]), 'Fourth of 4 arguments must be an object if third is a function.');
-            this.when = args[0];
-            this.bindingArguments = args[1];
-          } else if (_.isString(args[0])) {
-            assert(_.isObject(args[1]), 'Fourth of 4 arguments must be an object if third is a function.');
-            this.hint = args[0];
-            this.bindingArguments = args[1];
-          } else {
-            throw 'Third of 4 arguments must be either a number, string, or function.';
-          }
-        } else if (args.length >= 3) {
-          assert(_.isNumber(args[0]), 'Third of 5 arguments must be a number.');
-          assert(_.isFunction(args[1]) || _.isString(args[1]), 'Fourth of 5 arguments must be a function or string.');
-          assert(_.isObject(args[2]), 'Fifth of 5 arguments must be an object.');
-          this.lifecycle = args[0];
-          if (_.isFunction(args[1])) {
-            this.when = args[1];
-          } else {
-            this.hint = args[1];
-          }
-          this.bindingArguments = args[2];
+      constructor(options: ITool<T>) {
           
-          if (args.length > 3) {
-            console.warn('More than 5 arguments were provided. Extra arguments will be ignored.');
-          }
+        _.assign(this, options);
+        
+        if (_.isUndefined(this.lifecycle)) {
+          this.lifecycle = Smithy.Lifecycle.Singleton;
+        }
+        
+        assert(_.isString(this.name), "'name' is required and must be a string");
+        assert(!_.isUndefined(this.target), "'target' is required");
+        assert(!_.isNull(this.target), "'target' is required");
+        
+        if (!_.isUndefined(this.bindingArguments)) {
+          assert(_.isObject(this.bindingArguments), "'bindingArguments', if defined, must be an object.");
+        }
+        
+        if (!_.isUndefined(this.when)) {
+          assert(_.isFunction(this.when), "'when', if defined, must be a function.");
+        }
+        
+        if (!_.isUndefined(this.hint)) {
+          assert(_.isString(this.hint), "'hint', if defined, must be a string.");
         }
       }
     }
     
     export class Function<T extends {(...args: any[]): any}> extends BaseTool<T> implements ITool<T> {
-      constructor(name: string, target: T);
-      constructor(name: string, target: T, lifecycle: Lifecycle);
-      constructor(name: string, target: T, when: Forge.IPredicate);
-      constructor(name: string, target: T, hint: string);
-      constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-      constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(
-        public name: string,
-        public target: T,
-        ...args: any[]
-        ) {
-        super(name, target, args);
+      constructor(options: ITool<T>) {
+        super(options);
         
         this.targetType = TargetType.Function;
         
-        assert(_.isFunction(this.target), 'Target is required and must be a function');
+        assert(_.isFunction(this.target), "'target' is required and must be a function");
       }
     }
   
     export class Instance<T extends Object> extends BaseTool<T> implements ITool<T> {
-      constructor(name: string, target: T);
-      constructor(name: string, target: T, lifecycle: Lifecycle);
-      constructor(name: string, target: T, when: Forge.IPredicate);
-      constructor(name: string, target: T, hint: string);
-      constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-      constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(
-        public name: string,
-        public target: T,
-        ...args: any[]
-        ) {
-        super(name, target, args);
+      constructor(options: ITool<T>) {
+        super(options);
         
         this.targetType = TargetType.Instance;
       }
     }
   
     export class Type<T extends Forge.IType> extends BaseTool<T> implements ITool<T> {
-      constructor(name: string, target: T);
-      constructor(name: string, target: T, lifecycle: Lifecycle);
-      constructor(name: string, target: T, when: Forge.IPredicate);
-      constructor(name: string, target: T, hint: string);
-      constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-      constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-      constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
-      constructor(
-        public name: string,
-        public target: T,
-        ...args: any[]
-        ) {
-        super(name, target, args);
+      constructor(options: ITool<T>) {
+        super(options);
         
         this.targetType = TargetType.Type;
         
-        assert(_.isFunction(this.target), 'Target is required and must be a function');
+        assert(_.isFunction(this.target), "'target' is required and must be a function");
       }
     }
   }

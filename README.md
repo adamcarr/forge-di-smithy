@@ -42,7 +42,18 @@ The main container that will wrap a forge instance and register equipment to bin
 
 ### Tools
 
-A tool is a mapping for a binding. There are 3 different types of tools. Each tool requires a name and a target to be passed as the first 2 arguments respectively. After that, you can pass in a lifecycle, hint, binding arguments, and a when predicate. These are currently configured in 9 different overloads. Will refactor these out into an options object soon.
+A tool is a mapping for a binding. There are 3 different types of tools. Each tool requires an options argument to be provided. This options object follows the following contract.
+
+```
+{
+  name: string;
+  target: T;
+  lifecycle?: Lifecycle;
+  when?: Forge.IPredicate;
+  hint?: string;
+  bindingArguments?: Forge.IBindingArguments;
+}
+```
 
 #### Type Tool
 
@@ -77,11 +88,11 @@ class Blah {
 }
 
 var equipment: Smithy.IEquipment = [
-  new Smithy.Tools.Type('foo', Foo),
-  new Smithy.Tools.Type('foo2', Foo2),
-  new Smithy.Tools.Type('bar', Bar),
-  new Smithy.Tools.Type('blah', Blah)
-};
+  new Smithy.Tools.Type({name: 'foo', target: Foo}),
+  new Smithy.Tools.Type({name:'foo2', target: Foo2}),
+  new Smithy.Tools.Type({name: 'bar', target: Bar}),
+  new Smithy.Tools.Type({name: 'blah', target: Blah})
+];
 
 ...
 
@@ -116,11 +127,11 @@ function Blah (dependency) {
 }
 
 var equipment: Smithy.IEquipment = [
-  new Smithy.Tools.Type('foo', Foo),
-  new Smithy.Tools.Type('foo2', Foo2),
-  new Smithy.Tools.Type('bar', Bar),
-  new Smithy.Tools.Type('blah', Blah)
-};
+  new Smithy.Tools.Type({name: 'foo', target: Foo}),
+  new Smithy.Tools.Type({name:'foo2', target: Foo2}),
+  new Smithy.Tools.Type({name: 'bar', target: Bar}),
+  new Smithy.Tools.Type({name: 'blah', target: Blah})
+];
 
 ...
 
@@ -141,5 +152,5 @@ expect(blah.dependency).to.be.an.instanceOf(Foo2);
 
 ## Tasks
 
-- [ ] Refactor overloads for tools into an options argument for named arguments
+- [x] Refactor overloads for tools into an options argument for named arguments
 - [ ] Add ability to configure a tool to auto register a func resolver based on the current binding name + 'Func' for factory.

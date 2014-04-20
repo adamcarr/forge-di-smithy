@@ -10,7 +10,7 @@ describe('Smithy.Tools.Instance', () => {
   });
 
   it('should set targetType property to Smithy.TargetType.Instance on new instance', () => {
-    var tool = new Smithy.Tools.Instance('name', instance);
+    var tool = new Smithy.Tools.Instance({name: 'name', target: instance});
     expect(tool.targetType).toEqual(Smithy.TargetType.Instance);
   });
 });

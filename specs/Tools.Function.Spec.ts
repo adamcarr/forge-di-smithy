@@ -8,14 +8,14 @@ describe('Smithy.Tools.Function', () => {
   });
   
   it('should set targetType property to Smithy.TargetType.Function on new instance', () => {
-    var tool = new Smithy.Tools.Function('name', () => 'test');
+    var tool = new Smithy.Tools.Function({name: 'name', target: () => 'test'});
     expect(tool.targetType).toEqual(Smithy.TargetType.Function);
   });
   
   it('should throw exception when target is not a function', () => {
     expect(() => {
-      var tool = new Smithy.Tools.Function('name', <any>{});
-    }).toThrow('Target is required and must be a function');
+      var tool = new Smithy.Tools.Function({name: 'name', target: <any>{}});
+    }).toThrow("'target' is required and must be a function");
   });
   
 });

@@ -18,38 +18,38 @@ var CONSTANTS = {
 };
 
 var equipment: Smithy.IEquipment = [
-	new Smithy.Tools.Type(
-		CONSTANTS.LECTURE,
-		Lecture,
-		Smithy.Lifecycle.Transient
-	),
-	new Smithy.Tools.Type(
-		CONSTANTS.LECTURE_REPOSITORY,
-		Memory.Repository,
-		{modelName: CONSTANTS.LECTURE}
-	),
+	new Smithy.Tools.Type({
+		name: CONSTANTS.LECTURE,
+		target: Lecture,
+		lifecycle: Smithy.Lifecycle.Transient
+	}),
+	new Smithy.Tools.Type({
+		name: CONSTANTS.LECTURE_REPOSITORY,
+		target: Memory.Repository,
+		bindingArguments: {modelName: CONSTANTS.LECTURE}
+	}),
 	
-	new Smithy.Tools.Type(
-		CONSTANTS.STUDENT,
-		Student,
-		Smithy.Lifecycle.Transient
-	),
-	new Smithy.Tools.Type(
-		CONSTANTS.STUDENT_REPOSITORY,
-		Database.Repository,
-		{modelName: CONSTANTS.STUDENT}
-	),
+	new Smithy.Tools.Type({
+		name: CONSTANTS.STUDENT,
+		target: Student,
+		lifecycle: Smithy.Lifecycle.Transient
+	}),
+	new Smithy.Tools.Type({
+		name: CONSTANTS.STUDENT_REPOSITORY,
+		target: Database.Repository,
+		bindingArguments: {modelName: CONSTANTS.STUDENT}
+	}),
 	
-	new Smithy.Tools.Type(
-		CONSTANTS.TEACHER,
-		Teacher,
-		Smithy.Lifecycle.Transient
-	),
-	new Smithy.Tools.Type(
-		CONSTANTS.TEACHER_REPOSITORY,
-		Memory.Repository,
-		{modelName: CONSTANTS.TEACHER}
-	)
+	new Smithy.Tools.Type({
+		name: CONSTANTS.TEACHER,
+		target: Teacher,
+		lifecycle: Smithy.Lifecycle.Transient
+	}),
+	new Smithy.Tools.Type({
+		name: CONSTANTS.TEACHER_REPOSITORY,
+		target: Memory.Repository,
+		bindingArguments: {modelName: CONSTANTS.TEACHER}
+	})
 ];
 
 var inventory = {

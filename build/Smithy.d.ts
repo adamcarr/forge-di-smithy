@@ -12,8 +12,8 @@ declare module Smithy {
     interface ITool<T> {
         name: string;
         target: T;
-        targetType: TargetType;
-        lifecycle: Lifecycle;
+        targetType?: TargetType;
+        lifecycle?: Lifecycle;
         when?: Forge.IPredicate;
         hint?: string;
         bindingArguments?: Forge.IBindingArguments;
@@ -41,55 +41,16 @@ declare module Smithy {
             public when: Forge.IPredicate;
             public hint: string;
             public bindingArguments: Forge.IBindingArguments;
-            constructor(name: string, target: T, args: any[]);
+            constructor(options: ITool<T>);
         }
         class Function<T extends (...args: any[]) => any> extends BaseTool<T> implements ITool<T> {
-            public name: string;
-            public target: T;
-            constructor(name: string, target: T);
-            constructor(name: string, target: T, lifecycle: Lifecycle);
-            constructor(name: string, target: T, when: Forge.IPredicate);
-            constructor(name: string, target: T, hint: string);
-            constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-            constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
+            constructor(options: ITool<T>);
         }
         class Instance<T extends Object> extends BaseTool<T> implements ITool<T> {
-            public name: string;
-            public target: T;
-            constructor(name: string, target: T);
-            constructor(name: string, target: T, lifecycle: Lifecycle);
-            constructor(name: string, target: T, when: Forge.IPredicate);
-            constructor(name: string, target: T, hint: string);
-            constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-            constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
+            constructor(options: ITool<T>);
         }
         class Type<T extends Forge.IType> extends BaseTool<T> implements ITool<T> {
-            public name: string;
-            public target: T;
-            constructor(name: string, target: T);
-            constructor(name: string, target: T, lifecycle: Lifecycle);
-            constructor(name: string, target: T, when: Forge.IPredicate);
-            constructor(name: string, target: T, hint: string);
-            constructor(name: string, target: T, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string);
-            constructor(name: string, target: T, lifecycle: Lifecycle, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, hint: string, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, when: Forge.IPredicate, bindingArguments: Forge.IBindingArguments);
-            constructor(name: string, target: T, lifecycle: Lifecycle, hint: string, bindingArguments: Forge.IBindingArguments);
+            constructor(options: ITool<T>);
         }
     }
 }

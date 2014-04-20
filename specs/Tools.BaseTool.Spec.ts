@@ -8,60 +8,60 @@ describe('Smithy.Tools.BaseTool', () => {
   });
 
   it('should allow me to create a new instance', () => {
-    var tool = new Smithy.Tools.BaseTool('name', {}, []);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}});
     expect(tool).toBeDefined();
   });
 
   it('should set name property to provided name on new instance', () => {
     var expectedName = 'name';
-    var tool = new Smithy.Tools.BaseTool(expectedName, {}, []);
+    var tool = new Smithy.Tools.BaseTool({name: expectedName, target: {}});
     expect(tool.name).toEqual(expectedName);
   });
 
   it('should set default lifecycle to Smithy.Lifecycle.Singleton', () => {
-    var tool = new Smithy.Tools.BaseTool('name', {}, []);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}});
     expect(tool.lifecycle).toEqual(Smithy.Lifecycle.Singleton);
   });
 
   it('should set lifecycle to lifecycle passed into the constructor', () => {
-    var tool = new Smithy.Tools.BaseTool('name', {}, [Smithy.Lifecycle.Transient]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: Smithy.Lifecycle.Transient});
     expect(tool.lifecycle).toEqual(Smithy.Lifecycle.Transient);
   });
 
   it('should set target to target passed into the constructor', () => {
     var target = {};
-    var tool = new Smithy.Tools.BaseTool('name', target, []);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: target});
     expect(tool.target).toEqual(target);
   });
 
   it('should have undefined when and bindingArguments properties if not provided', () => {
-    var tool = new Smithy.Tools.BaseTool('name', {}, []);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}});
     expect(tool.when).toBeUndefined();
     expect(tool.bindingArguments).toBeUndefined();
   });
 
   it('should set when property if provided', () => {
     var when = (name) => true;
-    var tool = new Smithy.Tools.BaseTool('name', {}, [when]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, when: when});
     expect(tool.when).toEqual(when);
   });
 
   it('should set hint property if provided', () => {
     var hint = 'test';
-    var tool = new Smithy.Tools.BaseTool('name', {}, [hint]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, hint: hint});
     expect(tool.hint).toEqual(hint);
   });
 
   it('should set bindingArguments property if provided', () => {
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, bindingArguments: bindingArguments});
     expect(tool.bindingArguments).toEqual(bindingArguments);
   });
 
   it('should set lifecycle and when properties if provided', () => {
     var when = (name) => true;
     var lifecycle = Smithy.Lifecycle.Transient;
-    var tool = new Smithy.Tools.BaseTool('name', {}, [lifecycle, when]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: lifecycle, when: when});
     expect(tool.lifecycle).toEqual(lifecycle);
     expect(tool.when).toEqual(when);
   });
@@ -69,7 +69,7 @@ describe('Smithy.Tools.BaseTool', () => {
   it('should set lifecycle and hint properties if provided', () => {
     var hint = 'test';
     var lifecycle = Smithy.Lifecycle.Transient;
-    var tool = new Smithy.Tools.BaseTool('name', {}, [lifecycle, hint]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: lifecycle, hint: hint});
     expect(tool.lifecycle).toEqual(lifecycle);
     expect(tool.hint).toEqual(hint);
   });
@@ -77,7 +77,7 @@ describe('Smithy.Tools.BaseTool', () => {
   it('should set lifecycle and bindingArguments properties if provided', () => {
     var lifecycle = Smithy.Lifecycle.Transient;
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [lifecycle, bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: lifecycle, bindingArguments: bindingArguments});
     expect(tool.lifecycle).toEqual(lifecycle);
     expect(tool.bindingArguments).toEqual(bindingArguments);
   });
@@ -85,7 +85,7 @@ describe('Smithy.Tools.BaseTool', () => {
   it('should set when and bindingArguments properties if provided', () => {
     var when = (name) => true;
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [when, bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, when: when, bindingArguments: bindingArguments});
     expect(tool.when).toEqual(when);
     expect(tool.bindingArguments).toEqual(bindingArguments);
   });
@@ -93,7 +93,7 @@ describe('Smithy.Tools.BaseTool', () => {
   it('should set hint and bindingArguments properties if provided', () => {
     var hint = 'test';
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [hint, bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, hint: hint, bindingArguments: bindingArguments});
     expect(tool.hint).toEqual(hint);
     expect(tool.bindingArguments).toEqual(bindingArguments);
   });
@@ -102,7 +102,7 @@ describe('Smithy.Tools.BaseTool', () => {
     var lifecycle = Smithy.Lifecycle.Transient;
     var when = (name) => true;
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [lifecycle, when, bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: lifecycle, when: when, bindingArguments: bindingArguments});
     expect(tool.lifecycle).toEqual(lifecycle);
     expect(tool.when).toEqual(when);
     expect(tool.bindingArguments).toEqual(bindingArguments);
@@ -112,7 +112,7 @@ describe('Smithy.Tools.BaseTool', () => {
     var lifecycle = Smithy.Lifecycle.Transient;
     var hint = 'test';
     var bindingArguments: Forge.IBindingArguments = {'name': {}};
-    var tool = new Smithy.Tools.BaseTool('name', {}, [lifecycle, hint, bindingArguments]);
+    var tool = new Smithy.Tools.BaseTool({name: 'name', target: {}, lifecycle: lifecycle, hint: hint, bindingArguments: bindingArguments});
     expect(tool.lifecycle).toEqual(lifecycle);
     expect(tool.hint).toEqual(hint);
     expect(tool.bindingArguments).toEqual(bindingArguments);
@@ -120,62 +120,33 @@ describe('Smithy.Tools.BaseTool', () => {
 
   describe('when parameters are not valid', () => {
     it('should throw exception name argument is not a string', () => {
-      expect(() => new Smithy.Tools.BaseTool(null, {}, []))
-        .toThrow('Name is required and must be a string');
+      expect(() => new Smithy.Tools.BaseTool({name: null, target: {}}))
+        .toThrow("'name' is required and must be a string");
     });
   
     it('should throw exception when target argument is null', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', null, []))
-        .toThrow('Target is required');
+      expect(() => new Smithy.Tools.BaseTool({name: 'name', target: null}))
+        .toThrow("'target' is required");
     });
   
     it('should throw exception when target argument is undefined', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', undefined, []))
-        .toThrow('Target is required');
+      expect(() => new Smithy.Tools.BaseTool({name: 'name', target: undefined}))
+        .toThrow("'target' is required");
     });
   
-    it('should throw exception when third argument is not a number, function, or object', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [null]))
-        .toThrow('Third of 3 arguments must be either a number, function, or object.');
+    it('should throw exception bindingArguments is provided but not an object', () => {
+      expect(() => new Smithy.Tools.BaseTool({name: 'name', target: {}, bindingArguments: null}))
+        .toThrow("'bindingArguments', if defined, must be an object.");
     });
   
-    it('should throw exception when third argument of four is not a number of function', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [null, (name) => true]))
-        .toThrow('Third of 4 arguments must be either a number, string, or function.');
+    it('should throw exception when is provided but not a function', () => {
+      expect(() => new Smithy.Tools.BaseTool({name: 'name', target: {}, when: null}))
+        .toThrow("'when', if defined, must be a function.");
     });
   
-    it('should throw exception when fourth argument of four is not a function or object and third parameter is a number', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [3, null]))
-        .toThrow('Fourth of 4 arguments must be either a string, function, or object.');
-    });
-  
-    it('should throw exception when fourth argument of four is not a object and third parameter is a function', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [(name) => true, null]))
-        .toThrow('Fourth of 4 arguments must be an object if third is a function.');
-    });
-  
-    it('should throw exception when third of five arguments is not a number', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [null, null, null]))
-        .toThrow('Third of 5 arguments must be a number.');
-    });
-  
-    it('should throw exception when fourth of five arguments is not a function', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [3, null, null]))
-        .toThrow('Fourth of 5 arguments must be a function or string.');
-    });
-  
-    it('should throw exception when fifth of five arguments is not an object', () => {
-      expect(() => new Smithy.Tools.BaseTool('name', {}, [3, (name) => true, null]))
-        .toThrow('Fifth of 5 arguments must be an object.');
-    });
-  
-    it('should warn to console if more than five arguments are passed', () => {
-      var consoleWarnSpy = spyOn(console, 'warn');
-      
-      expect(consoleWarnSpy).not.toHaveBeenCalled();
-      var test = new Smithy.Tools.BaseTool('name', {}, [3, (name) => true, {}, {}]);
-      
-      expect(consoleWarnSpy).toHaveBeenCalledWith('More than 5 arguments were provided. Extra arguments will be ignored.');
+    it('should throw exception hint is provided but not a string', () => {
+      expect(() => new Smithy.Tools.BaseTool({name: 'name', target: {}, hint: null}))
+        .toThrow("'hint', if defined, must be a string.");
     });
   });
 });
