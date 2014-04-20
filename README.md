@@ -24,7 +24,7 @@ This should allow you to separate your binding mappings and organize them as des
 
 ## Getting started
 
-You can install Smithy from npm: (not yet published)
+You can install Smithy from npm:
 
 ```
 $ npm install forge-di-smithy
