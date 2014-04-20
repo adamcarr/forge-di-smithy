@@ -57,9 +57,12 @@ declare module "forge-di" {
 		interface IType {
 			new (...args: any[]);
 		}
-
-		interface ITypeShim<T> extends IType {
-			new (...args: any[]): T;
+		
+		/**
+		 * Represents arguments to help with resolving a binding.
+		 */
+		interface IBindingArguments {
+			[name: string]: any;
 		}
 
 		/**
@@ -82,6 +85,8 @@ declare module "forge-di" {
 			lifecycle: ILifecycle;
 			/** The predicate associated with this binding. Used to support hints. */
 			predicate: IPredicate;
+			/** The additional binding arguments to help resolve dependencies. */
+			arguments: IBindingArguments;
 
 			/**
 			 * Checks whether or not this binding matches the hint by executing the predicate.
@@ -117,6 +122,16 @@ declare module "forge-di" {
 			 * @param {IPredicate} predicate The predicate.
 			 */
 			when(predicate:IPredicate): IBinding;
+			/**
+			 * Registers a hint for this binding.
+			 * @param {string} hint The hint.
+			 */
+			when(hint: string): IBinding;
+			/**
+			 * Registers additional binding arguments to help with resolving.
+			 * @param {IBindingArguments} args The additional binding arguments.
+			 */
+			with(args: IBindingArguments): IBinding;
 			/**
 			 * Returns a string representing this binding.
 			 */

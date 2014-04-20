@@ -22,11 +22,13 @@
     "grunt-typescript": "~0.3.0",
     "jasmine-node": "~1.14.3",
     "grunt-jasmine-node": "~0.2.1",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-watch": "~0.6.1",
+    "chai": "~1.9.1"
   },
   "dependencies": {
     "forge-di": "~0.7.0",
     "lodash": "~2.4.1",
-    "assert": "~1.1.1"
+    "assert": "~1.1.1",
+    "bluebird": "~1.2.3"
   }
 }
