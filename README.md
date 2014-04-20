@@ -7,7 +7,14 @@ An extension library to [nkohari/forge](https://github.com/nkohari/forge) invers
 - [Intent](#intent)
 - [Getting started](#getting-started)
 - [Components](#components)
+  - [Equipment](#equipment)
+  - [Blacksmith](#blacksmith)
   - [Tools](#tools)
+    - [Type Tool](#type-tool)
+    - [Function Tool](#function-tool)
+    - [Instance Tool](#instance-tool)
+- [Example](#example)
+- [Tasks](#tasks)
 
 ## Intent
 
@@ -17,7 +24,7 @@ This should allow you to separate your binding mappings and organize them as des
 
 ## Getting started
 
-You can install Smithy from npm:
+You can install Smithy from npm: (not yet published)
 
 ```
 $ npm install forge-di-smithy
@@ -35,7 +42,7 @@ The main container that will wrap a forge instance and register equipment to bin
 
 ### Tools
 
-A tool is a mapping for a binding. There are 3 different types of tools. Each tool requires a name and a target to be passed as the first 2 arguments respectively. 
+A tool is a mapping for a binding. There are 3 different types of tools. Each tool requires a name and a target to be passed as the first 2 arguments respectively. After that, you can pass in a lifecycle, hint, binding arguments, and a when predicate. These are currently configured in 9 different overloads. Will refactor these out into an options object soon.
 
 #### Type Tool
 
@@ -50,6 +57,8 @@ The function tool is a mapping to the `forge.bind(...).to.function(...);` regist
 The instance tool is a mapping to the `forge.bind(...).to.instance(...);` registration.
 
 ## Example
+
+Here is a brief example. Best example can be found by going to [specs/lib/](specs/lib/)
 
 **TypeScript**
 ```typescript
@@ -130,5 +139,6 @@ expect(blah).to.be.an.instanceOf(Blah);
 expect(blah.dependency).to.be.an.instanceOf(Foo2);
 ```
 
-# License
-
+## Tasks
+ - [ ] Refactor overloads for tools into an options argument for named arguments
+ - [ ] Add ability to configure a tool to auto register a func resolver based on the current binding name + 'Func' for factory.
