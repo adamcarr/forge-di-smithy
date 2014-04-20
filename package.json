@@ -1,16 +1,21 @@
 {
   "name": "forge-di-smithy",
-  "version": "0.0.0",
+  "version": "0.8.0",
   "description": "additional tools to enhance forge-di",
-  "main": "index.js",
+  "main": "./build/Smithy.js",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "prepublish": "grunt"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/adamcarr/forge-di-smithy.git"
   },
-  "author": "Adam Carr",
+  "author": {
+    "name": "Adam Carr",
+    "email": "adam.carr@gmail.com",
+    "url": "http://blog.adamcarr.net/"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/adamcarr/forge-di-smithy/issues"
@@ -26,7 +31,7 @@
     "chai": "~1.9.1"
   },
   "dependencies": {
-    "forge-di": "~0.7.0",
+    "forge-di": "~0.8.0",
     "lodash": "~2.4.1",
     "assert": "~1.1.1",
     "bluebird": "~1.2.3"
