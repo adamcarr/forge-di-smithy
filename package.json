@@ -1,6 +1,6 @@
 {
   "name": "forge-di-smithy",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "additional tools to enhance forge-di",
   "main": "./build/Smithy.js",
   "scripts": {
