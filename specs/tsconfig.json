@@ -1,0 +1,33 @@
+{
+    "version": "1.4.1",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./Blacksmith.Spec.ts",
+        "./Tools.BaseTool.Spec.ts",
+        "./Tools.Function.Spec.ts",
+        "./Tools.Instance.Spec.ts",
+        "./Tools.Type.Spec.ts",
+        "./lib/Bootstrapper.ts",
+        "./lib/Contracts.ts",
+        "./lib/models/Contracts.ts",
+        "./lib/models/Inventory.ts",
+        "./lib/models/Lecture.ts",
+        "./lib/models/PersistentModelBase.ts",
+        "./lib/models/PersonBase.ts",
+        "./lib/models/Student.ts",
+        "./lib/models/Teacher.ts",
+        "./lib/storage/DatabaseRepository.ts",
+        "./lib/storage/MemoryRepository.ts"
+    ]
+}
