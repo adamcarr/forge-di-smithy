@@ -1,4 +1,4 @@
-import Smithy = require('../../../build/Smithy');
+import Smithy = require('../../../src/index');
 import Forge = require('forge-di');
 import Lecture = require('./Lecture');
 import Student = require('./Student');

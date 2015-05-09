@@ -1,4 +1,4 @@
-/// <reference path="../declarations/chai.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 var expect: chai.ExpectStatic = require('chai').expect;
 

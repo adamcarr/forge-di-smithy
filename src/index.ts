@@ -1,6 +1,4 @@
-/// <reference path="../declarations/forge.d.ts" />
-/// <reference path="../declarations/node.d.ts" />
-/// <reference path="../declarations/lodash.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 import Forge = require('forge-di');
 

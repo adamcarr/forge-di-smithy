@@ -1,33 +1,31 @@
 /* jshint node: true */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   grunt.initConfig({
-    typescript: {
+    pkg: grunt.file.readJSON('package.json'),
+    
+    ts: {
       src: {
-        src: ['src/**/*.ts'],
-        dest: 'build',
+        src: ["src/index.ts"],
+        outDir: "build",
         options: {
-          module: 'commonjs', //or commonjs
-          target: 'es5', //or es3
-          sourceMap: true,
-          declaration: true,
-          basePath: 'src',
-          comments: false
+          target: "ES5",
+          module: 'commonjs',
+          declaration: true
         }
       },
       specs: {
-        src: ['specs/**/*.ts'],
+        src: ["specs/**/*.ts"],
+        outDir: "specsOut/",
         options: {
-          module: 'commonjs', //or commonjs
-          target: 'es5', //or es3
-          sourceMap: false,
-          declaration: false,
-          comments: false
+          target: "ES5",
+          module: 'commonjs'
         }
       }
     },
+    
     jasmine_node: {
       options: {
         forceExit: true,
@@ -36,15 +34,28 @@ module.exports = function(grunt) {
         extensions: 'js',
         specNameMatcher: 'spec'
       },
-      all: ['specs/']
+      all: ['specsOut/']
+    },
+    
+    dtsGenerator: {
+        options: {
+            name: '<%= pkg.name %>',
+            baseDir: './build/',
+            out: '<%= pkg.name %>.d.ts',
+            main:  '<%= pkg.name %>/index'
+        },
+        default: {
+            src: [ './build/index.d.ts' ]
+        }
     }
   });
 
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('dts-generator');
 
-  grunt.registerTask('build', ['typescript:src']);
+  grunt.registerTask('build', ['ts:src', 'dtsGenerator']);
 
-  grunt.registerTask('test', ['typescript:specs', 'jasmine_node']);
+  grunt.registerTask('test', ['ts:specs', 'jasmine_node']);
 
-  grunt.registerTask('default', ['typescript', 'jasmine_node']);
+  grunt.registerTask('default', ['ts', 'jasmine_node', 'dtsGenerator']);
 };

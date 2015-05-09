@@ -1,6 +1,6 @@
 import Forge = require('forge-di');
 import ModelsInventory = require('./models/Inventory');
-import Smithy = require('../../build/Smithy');
+import Smithy = require('../../src/index');
 
 var forge = new Forge(),
 	blacksmith = new Smithy.Blacksmith(forge);

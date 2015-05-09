@@ -1,7 +1,7 @@
-/// <reference path="../declarations/jasmine.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 import Forge = require('forge-di');
-import Smithy = require('../build/Smithy');
+import Smithy = require('../src/index');
 
 describe('Smithy.Tools.Instance', () => {
   var instance = {};

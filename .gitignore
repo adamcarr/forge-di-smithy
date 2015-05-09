@@ -1,2 +1,6 @@
 node_modules
 specs/**/*.js
+specsOut/
+tscommand-*
+.tscache/
+.baseDir.*

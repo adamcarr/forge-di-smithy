@@ -1,4 +1,4 @@
-/// <reference path="../../../declarations/bluebird.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 import Contracts = require('../Contracts');
 

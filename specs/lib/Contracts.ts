@@ -1,4 +1,4 @@
-/// <reference path="../../declarations/bluebird.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 module Contracts {
 	export interface IRepository<TModel extends IPersistentModel> {

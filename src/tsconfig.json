@@ -13,6 +13,6 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./Smithy.ts"
+        "./index.ts"
     ]
 }

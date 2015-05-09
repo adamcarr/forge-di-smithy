@@ -2,7 +2,7 @@
   "name": "forge-di-smithy",
   "version": "0.9.0",
   "description": "additional tools to enhance forge-di",
-  "main": "./build/Smithy.js",
+  "main": "./build/index.js",
   "scripts": {
     "test": "grunt",
     "prepublish": "grunt"
@@ -22,18 +22,22 @@
   },
   "homepage": "https://github.com/adamcarr/forge-di-smithy",
   "devDependencies": {
-    "load-grunt-tasks": "~0.4.0",
+    "chai": "~1.9.1",
+    "dts-generator": "^1.4.1",
     "grunt": "~0.4.4",
-    "grunt-typescript": "~0.3.0",
-    "jasmine-node": "~1.14.3",
-    "grunt-jasmine-node": "~0.2.1",
     "grunt-contrib-watch": "~0.6.1",
-    "chai": "~1.9.1"
+    "grunt-jasmine-node": "~0.2.1",
+    "grunt-ts": "^4.0.1",
+    "jasmine-node": "~1.14.3",
+    "load-grunt-tasks": "~0.4.0"
   },
   "dependencies": {
     "assert": "~1.1.1",
     "bluebird": "~1.2.3",
     "forge-di": "^0.9.5",
     "lodash": "~2.4.1"
+  },
+  "typescript": {
+    "definition": "./forge-di-smithy.d.ts"
   }
 }

@@ -1,3 +1,8 @@
+// Type definitions for forge-di v0.9.5
+// Project: https://github.com/nkohari/forge
+// Definitions by: Adam Carr <https://github.com/adamcarr/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
 declare module "forge-di" {
 	/**
 	 * Implementation of the forge dependency injection manager.
@@ -33,14 +38,28 @@ declare module "forge-di" {
 		 * Get instance or instances of type registered under the provided name and optional hint.
 		 * @param {string} name The binding name.
 		 * @param {string} hint The binding hint.
+		 * @param {...args} args Additional args.
 		 */
-		get<T>(name: string, hint?: string): T;
+		get<T>(name: string, hint?: string, ...args: any[]): T;
 		/**
 		 * Get a single instance of type registered under the provided name and optional hint.
 		 * @param {string} name The binding name.
 		 * @param {string} hint The binding hint.
+		 * @param {...args} args Additional args.
 		 */
-		getOne<T>(name: string, hint?: string): T;
+		getOne<T>(name: string, hint?: string, ...args: any[]): T;
+		/**
+		 * Gets all instances of the type registered under the provided name.
+		 * @param {string} name The binding name.
+		 * @param {...args} args Additional args.
+		 */
+		getAll<T>(name: string, ...args: any[]): T | T[];
+		/**
+		 * Creates an instance of the target type attempting to resolve any dependencies.
+		 * @param {T} target The target type.
+		 * @param {...args} args Additional args.
+		 */
+		create<T>(target: T, ...args: any[]): T;
 		/**
 		 * Get all bindings registered under a binding name and optional hint.
 		 * @param {string} name The binding name.
@@ -51,11 +70,23 @@ declare module "forge-di" {
 		 * Returns a string that represents all bindings within this forge instance.
 		 */
 		inspect(): string;
+		
+		resolve<T>(name: string, context?: Forge.IContext, hint?: string, all?: boolean, ...args: any[]): T | T[];
+		resolveBindings(context: Forge.IContext, bindings: Forge.IBinding[], hint: string, args: any[], unwrap: boolean): Forge.IBinding[];
 	}
 
 	module Forge {
+		interface IContext {
+			new (): IContext;
+			bindings: IBinding[];
+			has(binding: IBinding): boolean;
+			push(binding: IBinding): void;
+			pop(): IBinding;
+			toString(indent: number): string;
+		}
+		
 		interface IType {
-			new (...args: any[]);
+			new (...args: any[]): any;
 		}
 		
 		/**
